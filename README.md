@@ -42,7 +42,7 @@ Then update it with new values
 
 	d.Update(x)
 	
-To obtain the descriptive statistics:
+To obtain the descriptive statistics
 
 	count := d.Count())
 	min := d.Min())
@@ -54,7 +54,7 @@ To obtain the descriptive statistics:
 	skew := d.SampleSkew()
 	kurtosis := d.SampleKurtosis()
 
-Note that population statistics are also provided:
+Note that population statistics are also provided
 
 	popStandardDeviation := d.PopulationStandardDeviation())
 	popVariance := d.PopulationVariance())
