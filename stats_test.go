@@ -3,6 +3,10 @@ package stats
 // 
 // stats.go testing
 //
+// Author:   Gary Boone
+// 
+// Copyright (c) 2011 Gary Boone <gary.boone@gmail.com>.
+//
 // To test, all code was compared against the R stats package (http://r-project.org)
 //
 // R test code (set 'a' appropriately for each test):

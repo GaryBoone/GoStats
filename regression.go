@@ -3,8 +3,10 @@ package stats
 //
 // regression.go
 // 
-// Gary Boone
+// Author:   Gary Boone
 // 
+// Copyright (c) 2011 Gary Boone <gary.boone@gmail.com>.
+//
 // Changes:
 //           20110618:    initial version
 //

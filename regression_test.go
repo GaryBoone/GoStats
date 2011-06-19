@@ -4,7 +4,11 @@ package stats
 // 
 // regression_test.go
 // 
-// Regression tests are compared to R results.
+// Author:   Gary Boone
+// 
+// Copyright (c) 2011 Gary Boone <gary.boone@gmail.com>.
+//
+// To test, all code was compared against the R stats package (http://r-project.org)
 // 
 // R test code example:
 // x <- c(2000 ,   2001  ,  2002  ,  2003 ,   2004)
