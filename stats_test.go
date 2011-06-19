@@ -55,7 +55,7 @@ const TOL = 1e-14
 
 // With no updates, these are the results on initialization
 func TestUpdate0(t *testing.T) {
-	var d Desc
+	var d Stats
 	checkInt(d.Count(), 0, "Count", t)
 	checkFloat64(d.Min(), 0.0, TOL, "Min", t)
 	checkFloat64(d.Max(), 0.0, TOL, "Max", t)
@@ -73,7 +73,7 @@ func TestUpdate0(t *testing.T) {
 
 // Update() 1 value
 func TestUpdate1(t *testing.T) {
-	var d Desc
+	var d Stats
 	d.Update(2.3)
 	checkInt(d.Count(), 1, "Count", t)
 	checkFloat64(d.Min(), 2.3, TOL, "Min", t)
@@ -92,7 +92,7 @@ func TestUpdate1(t *testing.T) {
 
 // Update() 2 values
 func TestUpdate2(t *testing.T) {
-	var d Desc
+	var d Stats
 	d.Update(2.3)
 	d.Update(0.4)
 	checkInt(d.Count(), 2, "Count", t)
@@ -112,7 +112,7 @@ func TestUpdate2(t *testing.T) {
 
 // Update() 3 values. 
 func TestUpdate3(t *testing.T) {
-	var d Desc
+	var d Stats
 	d.Update(2.3)
 	d.Update(0.4)
 	d.Update(-3.4)
@@ -133,7 +133,7 @@ func TestUpdate3(t *testing.T) {
 
 // Update() 4 values. Now all of the statistics are available.
 func TestUpdate4(t *testing.T) {
-	var d Desc
+	var d Stats
 	d.Update(1.0)
 	d.Update(2.0)
 	d.Update(3.0)
@@ -154,7 +154,7 @@ func TestUpdate4(t *testing.T) {
 }
 
 func TestUpdate5(t *testing.T) {
-	var d Desc
+	var d Stats
 	d.Update(1.0)
 	d.Update(2.0)
 	d.Update(3.0)
@@ -176,7 +176,7 @@ func TestUpdate5(t *testing.T) {
 }
 
 func TestUpdate10(t *testing.T) {
-	var d Desc
+	var d Stats
 	a := []float64{1.0, -2.0, 13.0, 47.0, 115.0, -0.03, -123.4, 23.0, -23.04, 12.3}
 	for _, v := range a {
 		d.Update(v)
@@ -198,7 +198,7 @@ func TestUpdate10(t *testing.T) {
 
 // Update by array. In this case, we use slices to update via half of the array at a time.
 func TestUpdateArray10(t *testing.T) {
-	var d Desc
+	var d Stats
 	a := []float64{1.0, -2.0, 13.0, 47.0, 115.0, -0.03, -123.4, 23.0, -23.04, 12.3}
 	// load the first half of the array
 	d.UpdateArray(a[:5])
@@ -277,18 +277,18 @@ func TestArrayStats2(t *testing.T) {
 //
 
 func BenchmarkUpdate(b *testing.B) {
-	var d Desc
+	var d Stats
 	for i := 0; i < b.N; i++ {
 		d.Update(3.5)
 	}
 }
 
 // Test the incremental Variance function by itself. This result is how fast the 
-// Variance is calculated not including the time to incrementally update the Desc
+// Variance is calculated not including the time to incrementally update the Stats
 // structure with 10 values.
 func BenchmarkPopulationVariance10(b *testing.B) {
 	b.StopTimer()
-	var d Desc
+	var d Stats
 	a := []float64{1.0, -2.0, 13.0, 47.0, 115.0, -0.03, -123.4, 23.0, -23.04, 12.3}
 	for _, v := range a {
 		d.Update(v)
@@ -300,12 +300,12 @@ func BenchmarkPopulationVariance10(b *testing.B) {
 }
 
 // Test the incremental Variance function by itself. This result is how fast the 
-// Variance is calculated _including_ the time to incrementally update the Desc
+// Variance is calculated _including_ the time to incrementally update the Stats
 // structure with 10 values. Therefore this result can be compared to the CalcVariance
 // function operating on 10 values.
 func BenchmarkPopulationVarWUpdates10(b *testing.B) {
 	b.StopTimer()
-	var d Desc
+	var d Stats
 	a := []float64{1.0, -2.0, 13.0, 47.0, 115.0, -0.03, -123.4, 23.0, -23.04, 12.3}
 	for _, v := range a {
 		d.Update(v)
@@ -363,7 +363,7 @@ func BenchmarkCalcSampleKurtosis100k(b *testing.B) {
 
 // Update() 1 0 value
 func TestUpdate01(t *testing.T) {
-	var d Desc
+	var d Stats
 	d.Update(0.0)
 	checkInt(d.Count(), 1, "Count", t)
 	checkFloat64(d.Min(), 0.0, TOL, "Min", t)
@@ -382,7 +382,7 @@ func TestUpdate01(t *testing.T) {
 
 // Update() 2 0 values
 func TestUpdate02(t *testing.T) {
-	var d Desc
+	var d Stats
 	d.Update(0.0)
 	d.Update(0.0)
 	checkInt(d.Count(), 2, "Count", t)
@@ -402,7 +402,7 @@ func TestUpdate02(t *testing.T) {
 
 // Update() 3 0 values. 
 func TestUpdate03(t *testing.T) {
-	var d Desc
+	var d Stats
 	d.Update(0.0)
 	d.Update(0.0)
 	d.Update(0.0)
@@ -423,7 +423,7 @@ func TestUpdate03(t *testing.T) {
 
 // Update() 4 0 values. 
 func TestUpdate04(t *testing.T) {
-	var d Desc
+	var d Stats
 	d.Update(0.0)
 	d.Update(0.0)
 	d.Update(0.0)
@@ -444,7 +444,7 @@ func TestUpdate04(t *testing.T) {
 }
 
 func TestUpdate05(t *testing.T) {
-	var d Desc
+	var d Stats
 	d.Update(0.0)
 	d.Update(0.0)
 	d.Update(0.0)
@@ -466,7 +466,7 @@ func TestUpdate05(t *testing.T) {
 }
 
 func TestUpdate010(t *testing.T) {
-	var d Desc
+	var d Stats
 	a := []float64{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 	for _, v := range a {
 		d.Update(v)

@@ -16,10 +16,10 @@ import (
 const NUM_SAMPLES = 5
 
 func incrementalDemo() {
-	var d stats.Desc
+	var d stats.Stats
 	fmt.Printf("\n**** Descriptive Statistics, Incremental Updates **\n")
 	fmt.Printf("** create a new descriptive stats struct:\n")
-	fmt.Printf("var d stats.Desc\n")
+	fmt.Printf("var d stats.Stats\n")
 	fmt.Printf("** update it with new values:\n")
 	for i := 0; i < NUM_SAMPLES; i++ {
 		x := rand.Float64()*100.0 - 25.0 // uniform samples in {-25, 75}

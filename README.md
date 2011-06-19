@@ -36,9 +36,9 @@ To make and run the demos, cd into each demo directory, then make and run the ex
 
 ### Descriptive Statistics ###
 
-To use incremental updates, declare a Desc struct
+To use incremental updates, declare a Stats struct
 
-	var d stats.Desc
+	var d stats.Stats
 
 Then update it with new values
 
@@ -65,13 +65,13 @@ Note that population statistics are also provided
 
 Updates can also be done with arrays of values
 
-	var d Desc
+	var d stats.Stats
 	a := []float64{1.0, -2.0, 13.0, 47.0, 115.0}
 	d.UpdateArray(a)
 
-Note that this is an update to an existing Desc struct. It updates the current values.
+Note that this is an update to an existing Stats struct. It updates the current values.
 
-Batch updates are the traditional calculations of descriptive statistics on a given array of values. They don't require a Desc struct and are prefixed with 'Stats'.
+Batch updates are the traditional calculations of descriptive statistics on a given array of values. They don't require a Stats struct and are prefixed with 'Stats'.
 
 	a := []float64{1.0, 2.0, 3.0, 4.0, 5.0}
 	populationVariance := StatsPopulationVariance(a)   // = 2.0
@@ -84,7 +84,7 @@ Similarly, univariate linear regression can be done incrementally or in batch.
 
 Declare a regression struct to hold the intermediate values
 
-	var r Regression
+	var r stats.Regression
 
 Then update as data becomes available
 
@@ -101,7 +101,7 @@ The regression can be calculated at any time and does not affect the Regression 
 
 As before, updates can be given arrays
 
-	var r Regression
+	var r stats.Regression
 	// do some r.Update(x, y) 
 
 	// now update with arrays of values

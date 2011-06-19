@@ -33,7 +33,7 @@ import (
 )
 
 // Data structure to contain accumulating values and moments
-type Desc struct {
+type Stats struct {
 	n, min, max, sum, mean, m2, m3, m4 float64
 }
 
@@ -44,27 +44,27 @@ type Desc struct {
 //
 //
 
-func (d *Desc) Count() int {
+func (d *Stats) Count() int {
 	return int(d.n)
 }
 
-func (d *Desc) Size() int {
+func (d *Stats) Size() int {
 	return int(d.n)
 }
 
-func (d *Desc) Min() float64 {
+func (d *Stats) Min() float64 {
 	return d.min
 }
 
-func (d *Desc) Max() float64 {
+func (d *Stats) Max() float64 {
 	return d.max
 }
 
-func (d *Desc) Sum() float64 {
+func (d *Stats) Sum() float64 {
 	return d.sum
 }
 
-func (d *Desc) Mean() float64 {
+func (d *Stats) Mean() float64 {
 	return d.mean
 }
 
@@ -76,7 +76,7 @@ func (d *Desc) Mean() float64 {
 //
 
 // Update the stats with the given value.
-func (d *Desc) Update(x float64) {
+func (d *Stats) Update(x float64) {
 	if d.n == 0.0 || x < d.min {
 		d.min = x
 	}
@@ -97,45 +97,45 @@ func (d *Desc) Update(x float64) {
 }
 
 // Update the stats with the given array of values.
-func (d *Desc) UpdateArray(data []float64) {
+func (d *Stats) UpdateArray(data []float64) {
 	for _, v := range data {
 		d.Update(v)
 	}
 }
 
-func (d *Desc) PopulationVariance() float64 {
+func (d *Stats) PopulationVariance() float64 {
 	if d.n == 0 || d.n == 1 {
 		return math.NaN()
 	}
 	return d.m2 / d.n
 }
 
-func (d *Desc) SampleVariance() float64 {
+func (d *Stats) SampleVariance() float64 {
 	if d.n == 0 || d.n == 1 {
 		return math.NaN()
 	}
 	return d.m2 / (d.n - 1.0)
 }
 
-func (d *Desc) PopulationStandardDeviation() float64 {
+func (d *Stats) PopulationStandardDeviation() float64 {
 	if d.n == 0 || d.n == 1 {
 		return math.NaN()
 	}
 	return math.Sqrt(d.PopulationVariance())
 }
 
-func (d *Desc) SampleStandardDeviation() float64 {
+func (d *Stats) SampleStandardDeviation() float64 {
 	if d.n == 0 || d.n == 1 {
 		return math.NaN()
 	}
 	return math.Sqrt(d.SampleVariance())
 }
 
-func (d *Desc) PopulationSkew() float64 {
+func (d *Stats) PopulationSkew() float64 {
 	return math.Sqrt(d.n/(d.m2*d.m2*d.m2)) * d.m3
 }
 
-func (d *Desc) SampleSkew() float64 {
+func (d *Stats) SampleSkew() float64 {
 	if d.n == 2.0 {
 		return math.NaN()
 	}
@@ -146,11 +146,11 @@ func (d *Desc) SampleSkew() float64 {
 // The kurtosis functions return _excess_ kurtosis, so that the kurtosis of a normal
 // distribution = 0.0. Then kurtosis < 0.0 indicates platykurtic (flat) while
 // kurtosis > 0.0 indicates leptokurtic (peaked) and near 0 indicates mesokurtic.Update
-func (d *Desc) PopulationKurtosis() float64 {
+func (d *Stats) PopulationKurtosis() float64 {
 	return (d.n*d.m4)/(d.m2*d.m2) - 3.0
 }
 
-func (d *Desc) SampleKurtosis() float64 {
+func (d *Stats) SampleKurtosis() float64 {
 	if d.n == 2.0 || d.n == 3.0 {
 		return math.NaN()
 	}
