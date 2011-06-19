@@ -2,6 +2,14 @@ package stats
 
 //
 // stats.go
+// 
+// Gary Boone
+// 
+// Changes:
+//           20110618:    initial version
+//
+// Source:
+// https://github.com/GaryBoone/GoStats
 //
 // There are three ways to use:
 // 1. Incremental or streaming -- include the new values one at a time
@@ -14,7 +22,7 @@ package stats
 //
 // See stats_test.go for examples of each.
 //
-// Descriptions of the calculations can be found here:
+// Descriptions of the skew and kurtosis calculations can be found here:
 // http://www.tc3.edu/instruct/sbrown/stat/shape.htm
 //
 
@@ -133,9 +141,11 @@ func (d *Desc) SampleSkew() float64 {
 	return math.Sqrt(d.n*(d.n-1.0)) / (d.n - 2.0) * popSkew
 }
 
-// The kurtosis functions return _excess_ kurtosis
+// The kurtosis functions return _excess_ kurtosis, so that the kurtosis of a normal
+// distribution = 0.0. Then kurtosis <0.0 indicates leptokurtic (peaked) while
+// kurtosis > 0.0 indicates platykurtic (flat)
 func (d *Desc) PopulationKurtosis() float64 {
-	return (d.n*d.m4)/(d.m2*d.m2) - 3
+	return (d.n*d.m4)/(d.m2*d.m2) - 3.0
 }
 
 func (d *Desc) SampleKurtosis() float64 {

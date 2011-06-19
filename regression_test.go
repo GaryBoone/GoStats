@@ -1,5 +1,20 @@
 package stats
 
+// 
+// 
+// regression_test.go
+// 
+// Regression tests are compared to R results.
+// 
+// R test code example:
+// x <- c(2000 ,   2001  ,  2002  ,  2003 ,   2004)
+// y <- c(9.34 ,   8.50  ,  7.62  ,  6.93  ,  6.60)
+// fit <- lm( y ~ x )
+// summary(fit)
+// 
+// The summary result contains the information used for the tests below.
+//
+
 import (
 	"testing"
 )

@@ -1,7 +1,21 @@
 package stats
 
+//
+// regression.go
+// 
+// Gary Boone
+// 
+// Changes:
+//           20110618:    initial version
+//
+// Source:
+// https://github.com/GaryBoone/GoStats
+//
+// Descriptions of the statistics and their calculation can be found here:
+//
 // http://mathworld.wolfram.com/LeastSquaresFitting.html
 // http://mathworld.wolfram.com/CorrelationCoefficient.html
+//
 
 import (
 	"math"
