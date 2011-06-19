@@ -54,7 +54,7 @@ const TOL = 1e-14
 //
 
 // With no updates, these are the results on initialization
-func TestAppend0(t *testing.T) {
+func TestUpdate0(t *testing.T) {
 	var d Desc
 	checkInt(d.Count(), 0, "Count", t)
 	checkFloat64(d.Min(), 0.0, TOL, "Min", t)
@@ -71,10 +71,10 @@ func TestAppend0(t *testing.T) {
 	checkNaN(d.SampleKurtosis(), "SampleKurtosis", t)
 }
 
-// Append() 1 value
-func TestAppend1(t *testing.T) {
+// Update() 1 value
+func TestUpdate1(t *testing.T) {
 	var d Desc
-	d.Append(2.3)
+	d.Update(2.3)
 	checkInt(d.Count(), 1, "Count", t)
 	checkFloat64(d.Min(), 2.3, TOL, "Min", t)
 	checkFloat64(d.Max(), 2.3, TOL, "Max", t)
@@ -90,11 +90,11 @@ func TestAppend1(t *testing.T) {
 	checkNaN(d.SampleKurtosis(), "SampleKurtosis", t)
 }
 
-// Append() 2 values
-func TestAppend2(t *testing.T) {
+// Update() 2 values
+func TestUpdate2(t *testing.T) {
 	var d Desc
-	d.Append(2.3)
-	d.Append(0.4)
+	d.Update(2.3)
+	d.Update(0.4)
 	checkInt(d.Count(), 2, "Count", t)
 	checkFloat64(d.Min(), 0.4, TOL, "Min", t)
 	checkFloat64(d.Max(), 2.3, TOL, "Max", t)
@@ -110,12 +110,12 @@ func TestAppend2(t *testing.T) {
 	checkNaN(d.SampleKurtosis(), "SampleKurtosis", t)
 }
 
-// Append() 3 values. 
-func TestAppend3(t *testing.T) {
+// Update() 3 values. 
+func TestUpdate3(t *testing.T) {
 	var d Desc
-	d.Append(2.3)
-	d.Append(0.4)
-	d.Append(-3.4)
+	d.Update(2.3)
+	d.Update(0.4)
+	d.Update(-3.4)
 	checkInt(d.Count(), 3, "Count", t)
 	checkFloat64(d.Min(), -3.4, TOL, "Min", t)
 	checkFloat64(d.Max(), 2.3, TOL, "Max", t)
@@ -131,13 +131,13 @@ func TestAppend3(t *testing.T) {
 	checkNaN(d.SampleKurtosis(), "SampleKurtosis", t)
 }
 
-// Append() 4 values. Now all of the statistics are available.
-func TestAppend4(t *testing.T) {
+// Update() 4 values. Now all of the statistics are available.
+func TestUpdate4(t *testing.T) {
 	var d Desc
-	d.Append(1.0)
-	d.Append(2.0)
-	d.Append(3.0)
-	d.Append(4.0)
+	d.Update(1.0)
+	d.Update(2.0)
+	d.Update(3.0)
+	d.Update(4.0)
 	checkInt(d.Count(), 4, "Count", t)
 	checkFloat64(d.Min(), 1.0, TOL, "Min", t)
 	checkFloat64(d.Max(), 4.0, TOL, "Max", t)
@@ -153,13 +153,13 @@ func TestAppend4(t *testing.T) {
 	checkFloat64(d.SampleKurtosis(), -1.2, TOL, "SampleKurtosis", t)
 }
 
-func TestAppend5(t *testing.T) {
+func TestUpdate5(t *testing.T) {
 	var d Desc
-	d.Append(1.0)
-	d.Append(2.0)
-	d.Append(3.0)
-	d.Append(4.0)
-	d.Append(5.0)
+	d.Update(1.0)
+	d.Update(2.0)
+	d.Update(3.0)
+	d.Update(4.0)
+	d.Update(5.0)
 	checkInt(d.Count(), 5, "Count", t)
 	checkFloat64(d.Min(), 1.0, TOL, "Min", t)
 	checkFloat64(d.Max(), 5.0, TOL, "Max", t)
@@ -175,11 +175,11 @@ func TestAppend5(t *testing.T) {
 	checkFloat64(d.SampleKurtosis(), -1.2, TOL, "SampleKurtosis", t)
 }
 
-func TestAppend10(t *testing.T) {
+func TestUpdate10(t *testing.T) {
 	var d Desc
 	a := []float64{1.0, -2.0, 13.0, 47.0, 115.0, -0.03, -123.4, 23.0, -23.04, 12.3}
 	for _, v := range a {
-		d.Append(v)
+		d.Update(v)
 	}
 	checkInt(d.Count(), 10, "Count", t)
 	checkFloat64(d.Min(), -123.4, TOL, "Min", t)
@@ -196,12 +196,12 @@ func TestAppend10(t *testing.T) {
 	checkFloat64(d.SampleKurtosis(), 3.179835417592894, TOL, "SampleKurtosis", t)
 }
 
-// Append by array. In this case, we use slices to update via half of the array at a time.
-func TestAppendArray10(t *testing.T) {
+// Update by array. In this case, we use slices to update via half of the array at a time.
+func TestUpdateArray10(t *testing.T) {
 	var d Desc
 	a := []float64{1.0, -2.0, 13.0, 47.0, 115.0, -0.03, -123.4, 23.0, -23.04, 12.3}
 	// load the first half of the array
-	d.AppendArray(a[:5])
+	d.UpdateArray(a[:5])
 	checkInt(d.Count(), 5, "Count", t)
 	checkFloat64(d.Min(), -2.0, TOL, "Min", t)
 	checkFloat64(d.Max(), 115.0, TOL, "Max", t)
@@ -217,7 +217,7 @@ func TestAppendArray10(t *testing.T) {
 	checkFloat64(d.SampleKurtosis(), 1.809390299839858, TOL, "SampleKurtosis", t)
 
 	// load rest of array. The results will be cumulative.
-	d.AppendArray(a[5:])
+	d.UpdateArray(a[5:])
 	checkInt(d.Count(), 10, "Count", t)
 	checkFloat64(d.Min(), -123.4, TOL, "Min", t)
 	checkFloat64(d.Max(), 115.0, TOL, "Max", t)
@@ -276,10 +276,10 @@ func TestArrayStats2(t *testing.T) {
 // run with: gotest -bench="Benchmark"
 //
 
-func BenchmarkAppend(b *testing.B) {
+func BenchmarkUpdate(b *testing.B) {
 	var d Desc
 	for i := 0; i < b.N; i++ {
-		d.Append(3.5)
+		d.Update(3.5)
 	}
 }
 
@@ -291,7 +291,7 @@ func BenchmarkPopulationVariance10(b *testing.B) {
 	var d Desc
 	a := []float64{1.0, -2.0, 13.0, 47.0, 115.0, -0.03, -123.4, 23.0, -23.04, 12.3}
 	for _, v := range a {
-		d.Append(v)
+		d.Update(v)
 	}
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
@@ -308,7 +308,7 @@ func BenchmarkPopulationVarWUpdates10(b *testing.B) {
 	var d Desc
 	a := []float64{1.0, -2.0, 13.0, 47.0, 115.0, -0.03, -123.4, 23.0, -23.04, 12.3}
 	for _, v := range a {
-		d.Append(v)
+		d.Update(v)
 	}
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
@@ -361,10 +361,10 @@ func BenchmarkCalcSampleKurtosis100k(b *testing.B) {
 //
 //
 
-// Append() 1 0 value
-func TestAppend01(t *testing.T) {
+// Update() 1 0 value
+func TestUpdate01(t *testing.T) {
 	var d Desc
-	d.Append(0.0)
+	d.Update(0.0)
 	checkInt(d.Count(), 1, "Count", t)
 	checkFloat64(d.Min(), 0.0, TOL, "Min", t)
 	checkFloat64(d.Max(), 0.0, TOL, "Max", t)
@@ -380,11 +380,11 @@ func TestAppend01(t *testing.T) {
 	checkNaN(d.SampleKurtosis(), "SampleKurtosis", t)
 }
 
-// Append() 2 0 values
-func TestAppend02(t *testing.T) {
+// Update() 2 0 values
+func TestUpdate02(t *testing.T) {
 	var d Desc
-	d.Append(0.0)
-	d.Append(0.0)
+	d.Update(0.0)
+	d.Update(0.0)
 	checkInt(d.Count(), 2, "Count", t)
 	checkFloat64(d.Min(), 0.0, TOL, "Min", t)
 	checkFloat64(d.Max(), 0.0, TOL, "Max", t)
@@ -400,12 +400,12 @@ func TestAppend02(t *testing.T) {
 	checkNaN(d.SampleKurtosis(), "SampleKurtosis", t)
 }
 
-// Append() 3 0 values. 
-func TestAppend03(t *testing.T) {
+// Update() 3 0 values. 
+func TestUpdate03(t *testing.T) {
 	var d Desc
-	d.Append(0.0)
-	d.Append(0.0)
-	d.Append(0.0)
+	d.Update(0.0)
+	d.Update(0.0)
+	d.Update(0.0)
 	checkInt(d.Count(), 3, "Count", t)
 	checkFloat64(d.Min(), 0.0, TOL, "Min", t)
 	checkFloat64(d.Max(), 0.0, TOL, "Max", t)
@@ -421,13 +421,13 @@ func TestAppend03(t *testing.T) {
 	checkNaN(d.SampleKurtosis(), "SampleKurtosis", t)
 }
 
-// Append() 4 0 values. 
-func TestAppend04(t *testing.T) {
+// Update() 4 0 values. 
+func TestUpdate04(t *testing.T) {
 	var d Desc
-	d.Append(0.0)
-	d.Append(0.0)
-	d.Append(0.0)
-	d.Append(0.0)
+	d.Update(0.0)
+	d.Update(0.0)
+	d.Update(0.0)
+	d.Update(0.0)
 	checkInt(d.Count(), 4, "Count", t)
 	checkFloat64(d.Min(), 0.0, TOL, "Min", t)
 	checkFloat64(d.Max(), 0.0, TOL, "Max", t)
@@ -443,13 +443,13 @@ func TestAppend04(t *testing.T) {
 	checkNaN(d.SampleKurtosis(), "SampleKurtosis", t)
 }
 
-func TestAppend05(t *testing.T) {
+func TestUpdate05(t *testing.T) {
 	var d Desc
-	d.Append(0.0)
-	d.Append(0.0)
-	d.Append(0.0)
-	d.Append(0.0)
-	d.Append(0.0)
+	d.Update(0.0)
+	d.Update(0.0)
+	d.Update(0.0)
+	d.Update(0.0)
+	d.Update(0.0)
 	checkInt(d.Count(), 5, "Count", t)
 	checkFloat64(d.Min(), 0.0, TOL, "Min", t)
 	checkFloat64(d.Max(), 0.0, TOL, "Max", t)
@@ -465,11 +465,11 @@ func TestAppend05(t *testing.T) {
 	checkNaN(d.SampleKurtosis(), "SampleKurtosis", t)
 }
 
-func TestAppend010(t *testing.T) {
+func TestUpdate010(t *testing.T) {
 	var d Desc
 	a := []float64{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
 	for _, v := range a {
-		d.Append(v)
+		d.Update(v)
 	}
 	checkInt(d.Count(), 10, "Count", t)
 	checkFloat64(d.Min(), 0.0, TOL, "Min", t)

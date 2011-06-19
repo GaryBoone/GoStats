@@ -9,11 +9,35 @@ Stats is a descriptive statistics and linear regression package for Go. It provi
 * Batch updates: Calculate stats and regression only for the given array of values.
 * Population and sample statistics included
 
-Thorough tests and benchmarks included.
-
 Incremental updates are useful for streaming data applications or situations in which storing the data for statistics is prohibitive. In fact, if the data is stored only for the purpose of statistical calculations, incremental updates make storage unnecessary.
 
 The package includes convenience functions that allow incremental updates by single or multiple values. Or you can use traditional batch calculations on a given array of values. The linear regression functions also include incremental and batch updates. 
 
-See the *_test.go files for example usage.
+See demo.go and the *_test.go files for example usage.
 
+## Installation
+
+To install
+
+	git clone https://github.com/GaryBoone/GoStats.git
+	cd GoStats
+	make
+	make install
+
+To make and run the demo
+
+	cd demo
+	make
+	./demo
+
+## Usage
+
+
+
+## Tests
+
+	gotest
+	
+## Benchmarks
+
+	gotest -bench="Benchmark"

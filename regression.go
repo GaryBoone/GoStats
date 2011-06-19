@@ -50,7 +50,7 @@ func (r *Regression) Size() int {
 //
 
 // Update the stats with a new point.
-func (r *Regression) Append(x, y float64) {
+func (r *Regression) Update(x, y float64) {
 	r.n++
 	r.sx += x
 	r.sy += y
@@ -60,12 +60,12 @@ func (r *Regression) Append(x, y float64) {
 }
 
 // Update the stats with arrays of x and y values.
-func (r *Regression) AppendArray(xData, yData []float64) {
+func (r *Regression) UpdateArray(xData, yData []float64) {
 	if len(xData) != len(yData) {
-		panic("array lengths differ in AppendArray()")
+		panic("array lengths differ in UpdateArray()")
 	}
 	for i := 0; i < len(xData); i++ {
-		r.Append(xData[i], yData[i])
+		r.Update(xData[i], yData[i])
 	}
 }
 
@@ -115,10 +115,10 @@ func (r *Regression) InterceptStandardError() float64 {
 // 
 // 
 
-func LinearRegression(xData, yData []float64) (slope, intercept, rsquared,
-slopeStdErr, interceptStdErr float64) {
+func LinearRegression(xData, yData []float64) (slope, intercept, rsquared float64,
+count int, slopeStdErr, interceptStdErr float64) {
 	var r Regression
-	r.AppendArray(xData, yData)
+	r.UpdateArray(xData, yData)
 	ss_xy := r.n*r.sxy - r.sx*r.sy
 	ss_xx := r.n*r.sxx - r.sx*r.sx
 	ss_yy := r.n*r.syy - r.sy*r.sy
@@ -134,5 +134,6 @@ slopeStdErr, interceptStdErr float64) {
 		mean_x := r.sx / r.n
 		interceptStdErr = s * math.Sqrt(1.0/r.n+mean_x*mean_x/ss_xx)
 	}
+	count = int(r.n)
 	return
 }

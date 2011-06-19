@@ -76,7 +76,7 @@ func (d *Desc) Mean() float64 {
 //
 
 // Update the stats with the given value.
-func (d *Desc) Append(x float64) {
+func (d *Desc) Update(x float64) {
 	if d.n == 0.0 || x < d.min {
 		d.min = x
 	}
@@ -97,9 +97,9 @@ func (d *Desc) Append(x float64) {
 }
 
 // Update the stats with the given array of values.
-func (d *Desc) AppendArray(data []float64) {
+func (d *Desc) UpdateArray(data []float64) {
 	for _, v := range data {
-		d.Append(v)
+		d.Update(v)
 	}
 }
 
@@ -144,8 +144,8 @@ func (d *Desc) SampleSkew() float64 {
 }
 
 // The kurtosis functions return _excess_ kurtosis, so that the kurtosis of a normal
-// distribution = 0.0. Then kurtosis <0.0 indicates leptokurtic (peaked) while
-// kurtosis > 0.0 indicates platykurtic (flat)
+// distribution = 0.0. Then kurtosis < 0.0 indicates platykurtic (flat) while
+// kurtosis > 0.0 indicates leptokurtic (peaked) and near 0 indicates mesokurtic.Update
 func (d *Desc) PopulationKurtosis() float64 {
 	return (d.n*d.m4)/(d.m2*d.m2) - 3.0
 }
