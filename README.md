@@ -24,11 +24,15 @@ To install
 	make
 	make install
 
-To make and run the demo
+To make and run the demos
 
-	cd demo
+	cd demos/descriptive_statistics/
 	make
-	./demo
+	./descriptive_stats_demo
+	cd ../regression
+	make
+	./regression_demo
+
 
 ## Usage ##
 
