@@ -26,13 +26,11 @@ To install
 
 To make and run the demos
 
-	cd demos/descriptive_statistics/
-	make
-	./descriptive_stats_demo
-	cd ../regression
-	make
-	./regression_demo
-
+	(cd demos/descriptive_statistics/ && make)
+	./demos/descriptive_statistics/descriptive_stats_demo
+	(cd demos/regression/ && make)
+	./demos/regression/regression_demo
+	
 
 ## Usage ##
 
