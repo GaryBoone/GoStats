@@ -39,6 +39,7 @@ To use incremental updates, declare a Desc struct
 	var d stats.Desc
 
 Then update it with new values
+
 	d.Update(x)
 	
 To obtain the descriptive statistics:
