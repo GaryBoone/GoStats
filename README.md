@@ -24,7 +24,7 @@ To install
 	make
 	make install
 
-To make and run the demos
+To make and run the demos, cd into each demo directory, then make and run the executable, or
 
 	(cd demos/descriptive_statistics/ && make)
 	./demos/descriptive_statistics/descriptive_stats_demo
