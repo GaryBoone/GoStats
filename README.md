@@ -46,20 +46,20 @@ Then update it with new values
 	
 To obtain the descriptive statistics
 
-	count := d.Count())
-	min := d.Min())
-	max := d.Max())
-	sum := d.Sum())
-	mean := d.Mean())
-	standardDeviation := d.SampleStandardDeviation())
-	variance := d.SampleVariance())
+	count := d.Count()
+	min := d.Min()
+	max := d.Max()
+	sum := d.Sum()
+	mean := d.Mean()
+	standardDeviation := d.SampleStandardDeviation()
+	variance := d.SampleVariance()
 	skew := d.SampleSkew()
 	kurtosis := d.SampleKurtosis()
 
 Note that population statistics are also provided
 
-	popStandardDeviation := d.PopulationStandardDeviation())
-	popVariance := d.PopulationVariance())
+	popStandardDeviation := d.PopulationStandardDeviation()
+	popVariance := d.PopulationVariance()
 	popSkew := d.PopulationSkew()
 	popKurtosis := d.PopulationKurtosis()
 
