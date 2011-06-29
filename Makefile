@@ -4,5 +4,6 @@ TARG=stats
 GOFILES=\
 	stats.go\
 	regression.go\
+	rand_normal.go
 
 include $(GOROOT)/src/Make.pkg

@@ -96,6 +96,23 @@ func printArray(name string, a []float64) {
 	fmt.Printf("}\n")
 }
 
+func normalDistributionDemo() {
+	var d stats.Stats
+	maxTrials := 10000
+	printEvery := 1000
+	for i := 0; i <= maxTrials; i++ {
+		y := stats.RandNormal()
+		d.Update(y)
+		if i != 0 && i%printEvery == 0 {
+			mean := d.Mean()
+			variance := d.PopulationVariance()
+			skew := d.PopulationSkew()
+			kurtosis := d.PopulationKurtosis()
+			fmt.Printf("itr %v: mean (→0.0) = %0.5f, variance (→1.0) = %0.5f, skew (→0.0) = %0.5f, kurtosis (→0.0) = %0.5f\n",
+				i, mean, variance, skew, kurtosis)
+		}
+	}
+}
 
 func main() {
 	fmt.Printf("GoStats Demo\n\n")
@@ -104,4 +121,5 @@ func main() {
 
 	incrementalDemo()
 	batchDemo()
+	normalDistributionDemo()
 }
