@@ -1,8 +1,28 @@
 //
 //
-// Normal Distribution function
+// Normal Distribution Random Value functions
 //
+// Author:   Gary Boone
+// 
+// Copyright (c) 2011 Gary Boone <gary.boone@gmail.com>.
 //
+// RandNormal() returns a random value from a normal distribution.
+//
+// This package contains three methods for generating random values that are normally
+// distributed. All are exact methods, differing in implmentation and speed. Run the
+// benchmarks to see the speeds: gotest -bench="Benchmark"
+//
+// The three functions are
+//	   RandNormalBMT()             // Box Muller Transformation
+//	   RandNormalPolarBM()         // Polar Box Muller
+//	   RandNormalZig()             // Ziggurat Method of JA Doornik
+//
+// Each method generates one random value. The BMT and PBM methods also have methods
+// that return a pair of values. Just suffix the function name with 'Pair' 
+//
+// RandNormal() is an alias to RandNormalPolarBM(), the fastest method by benchmark
+//
+
 package stats
 
 import (
@@ -34,6 +54,7 @@ func RandNormalBMTPair() (float64, float64) {
 	return BoxMullerTransformation(x1, x2)
 }
 
+// Generate a random normal using the Box Muller Transformation, memoizing the second value
 func RandNormalBMT() (r float64) {
 	if !use_spare {
 		r, spare = RandNormalBMTPair()
@@ -68,6 +89,7 @@ func RandNormalPolarBMPair() (float64, float64) {
 	return f * x, f * y
 }
 
+// Generate a random normal using the Polar Box Muller, memoizing the second value
 func RandNormalPolarBM() (r float64) {
 	if !use_spare {
 		r, spare = RandNormalPolarBMPair()
@@ -150,8 +172,7 @@ func RandNormalZig() (x float64) {
 	return
 }
 
+
 func RandNormal() (x float64) {
 	return RandNormalZig()
-//	return RandNormalPolarBM()
-//	return RandNormalBMT()
 }

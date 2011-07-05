@@ -9,13 +9,14 @@ package stats
 //
 // Changes:
 //           20110618:    initial version
+//           20110705:    added RandNormal() and tests/benchmarks
 //
 // Source:
 // https://github.com/GaryBoone/GoStats
 //
-// There are three ways to use:
+// There are three ways to use GoStats:
 // 1. Incremental or streaming -- include the new values one at a time
-// 2. Incremental, in chunks -- include the new values in chucks by passing an array of values
+// 2. Incremental, in chunks -- include the new values in chunks by passing an array of values
 //
 // Obtain the descriptive stats at any time by calling Mean(), Variance(), etc.
 //

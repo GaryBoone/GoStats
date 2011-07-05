@@ -97,6 +97,8 @@ func printArray(name string, a []float64) {
 }
 
 func normalDistributionDemo() {
+	fmt.Println("\nGenerating 10,000 normal samples. The descriptive statistics show convergence to the appropriate")
+	fmt.Println("  values: mean→0, variance→1, skew→0, kurtosis→0. ")
 	var d stats.Stats
 	maxTrials := 10000
 	printEvery := 1000

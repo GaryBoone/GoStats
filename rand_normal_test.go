@@ -1,6 +1,10 @@
 //
 //
-// Normal Distribution function
+// Normal Distribution sample tests
+//
+// Author:   Gary Boone
+// 
+// Copyright (c) 2011 Gary Boone <gary.boone@gmail.com>.
 //
 //
 package stats
@@ -15,3 +19,29 @@ func TestBoxMullerTransformation(t *testing.T) {
 	checkFloat64(y2, 1.475807326106928, TOL, "BoxMullerTransformation y2", t)
 }
 
+//
+//
+// Benchmark tests
+//
+// run with: gotest -bench="Benchmark"
+//
+
+func BenchmarkBoxMullerTransformation(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		RandNormalBMT()
+	}
+}
+
+
+func BenchmarkPolarBoxMuller(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		RandNormalPolarBM()
+	}
+}
+
+
+func BenchmarkZiggurat(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		RandNormalZig()
+	}
+}
