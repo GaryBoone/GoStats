@@ -1,5 +1,10 @@
 //
-// demo.go
+// descriptive_stats_demo.go
+//
+//
+// Can be compiled and run from the main GoStats directory using:
+// $ (cd demos/descriptive_statistics/ && make clean && make)
+// $ demos/descriptive_statistics/descriptive_stats_demo
 //
 // Author:    Gary Boone
 //
@@ -97,11 +102,11 @@ func printArray(name string, a []float64) {
 }
 
 func normalDistributionDemo() {
-	fmt.Println("\nGenerating 10,000 normal samples. The descriptive statistics show convergence to the appropriate")
-	fmt.Println("  values: mean→0, variance→1, skew→0, kurtosis→0. ")
+	maxTrials := 100
+	printEvery := 10
+	fmt.Printf("\nGenerating %v normal samples. The descriptive statistics ", maxTrials)
+	fmt.Printf("converge to the appropriate values: mean→0, variance→1, skew→0, kurtosis→0. \n")
 	var d stats.Stats
-	maxTrials := 10000
-	printEvery := 1000
 	for i := 0; i <= maxTrials; i++ {
 		y := rand.NormFloat64()
 		d.Update(y)

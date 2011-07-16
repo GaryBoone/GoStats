@@ -1,5 +1,9 @@
 //
-// demo.go
+// regression_demo.go
+//
+// Can be compiled and run from the main GoStats directory using:
+// $ (cd demos/regression/ && make clean && make)
+// $ demos/regression/regression_demo
 //
 // Author:    Gary Boone
 //
