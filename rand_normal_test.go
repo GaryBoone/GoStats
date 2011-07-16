@@ -11,6 +11,7 @@ package stats
 
 import (
 	"testing"
+	"rand"
 )
 
 func TestBoxMullerTransformation(t *testing.T) {
@@ -45,3 +46,11 @@ func BenchmarkZiggurat(b *testing.B) {
 		RandNormalZig()
 	}
 }
+
+func BenchmarkNormFloat64(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		rand.NormFloat64()
+	}
+}
+
+

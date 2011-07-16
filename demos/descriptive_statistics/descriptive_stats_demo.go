@@ -103,7 +103,7 @@ func normalDistributionDemo() {
 	maxTrials := 10000
 	printEvery := 1000
 	for i := 0; i <= maxTrials; i++ {
-		y := stats.RandNormal()
+		y := rand.NormFloat64()
 		d.Update(y)
 		if i != 0 && i%printEvery == 0 {
 			mean := d.Mean()
