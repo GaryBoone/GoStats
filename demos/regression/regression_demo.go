@@ -11,14 +11,13 @@
 package main
 
 import (
-	"stats" // assumes you've done 'make install' in the stats directory
 	"fmt"
-	"rand"
+	"math/rand"
+	stats "../../"
 	"time"
 )
 
 const NUM_SAMPLES = 5
-
 
 func incrementalRegressionDemo() {
 	var r stats.Regression
@@ -67,7 +66,7 @@ func batchRegressionDemo() {
 	fmt.Printf("** array of values:\n")
 	xData := make([]float64, NUM_SAMPLES)
 	for i := 0; i < NUM_SAMPLES; i++ {
-		xData[i] = float64(i)*3.0
+		xData[i] = float64(i) * 3.0
 	}
 	printArray("xData", xData)
 	yData := makeArray(NUM_SAMPLES, 100, -25)
@@ -84,11 +83,10 @@ func batchRegressionDemo() {
 	fmt.Printf("intercept standard error = %v\n", intcptStdErr)
 }
 
-
 func main() {
 	fmt.Printf("GoStats Demo\n\n")
 
-	rand.Seed(time.Nanoseconds())
+	rand.Seed(time.Now().Unix())
 
 	incrementalRegressionDemo()
 	batchRegressionDemo()

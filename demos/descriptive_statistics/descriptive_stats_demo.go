@@ -12,9 +12,9 @@
 package main
 
 import (
-	"stats" // assumes you've done 'make install' in the stats directory
 	"fmt"
-	"rand"
+	"math/rand"
+	stats "../../"
 	"time"
 )
 
@@ -124,7 +124,7 @@ func normalDistributionDemo() {
 func main() {
 	fmt.Printf("GoStats Demo\n\n")
 
-	rand.Seed(time.Nanoseconds())
+	rand.Seed(time.Now().Unix())
 
 	incrementalDemo()
 	batchDemo()
