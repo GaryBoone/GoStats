@@ -5,7 +5,7 @@ package stats
 // 
 // Author:   Gary Boone
 // 
-// Copyright (c) 2011 Gary Boone <gary.boone@gmail.com>.
+// Copyright (c) 2011-2013 Gary Boone <gary.boone@gmail.com>.
 //
 // Changes:
 //           20110618:    initial version
@@ -41,7 +41,6 @@ func (r *Regression) Count() int {
 func (r *Regression) Size() int {
 	return int(r.n)
 }
-
 
 //
 // 
@@ -116,7 +115,7 @@ func (r *Regression) InterceptStandardError() float64 {
 // 
 
 func LinearRegression(xData, yData []float64) (slope, intercept, rsquared float64,
-count int, slopeStdErr, interceptStdErr float64) {
+	count int, slopeStdErr, interceptStdErr float64) {
 	var r Regression
 	r.UpdateArray(xData, yData)
 	ss_xy := r.n*r.sxy - r.sx*r.sy

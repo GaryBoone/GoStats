@@ -1,12 +1,14 @@
 package stats
 
 // 
-// 
 // regression_test.go
 // 
 // Author:   Gary Boone
 // 
-// Copyright (c) 2011 Gary Boone <gary.boone@gmail.com>.
+// Test:
+//   go test stats.go stats_test.go regression.go regression_test.go
+//
+// Copyright (c) 2011-2013 Gary Boone <gary.boone@gmail.com>.
 //
 // To test, all code was compared against the R stats package (http://r-project.org)
 // 
@@ -170,7 +172,6 @@ func TestLinearRegression5(t *testing.T) {
 	checkFloat64(slopeStdErr, 0.0634113554499872, 1e-10, "SlopeStandardError", t)
 	checkFloat64(intcptStdErr, 126.9495652848741400, 1e-6, "InterceptStandardError", t)
 }
-
 
 //
 //

@@ -5,28 +5,31 @@ package stats
 // 
 // Author:   Gary Boone
 // 
-// Copyright (c) 2011 Gary Boone <gary.boone@gmail.com>.
+// Copyright (c) 2011-2013 Gary Boone <gary.boone@gmail.com>.
 //
 // Changes:
-//           20110618:    initial version
-//           20110705:    added RandNormal() and tests/benchmarks
+//           20110618   initial version
+//           20110705   added RandNormal() and tests/benchmarks
+//           20130121	Go1 cleanup; documentation cleanup
 //
 // Source:
 // https://github.com/GaryBoone/GoStats
 //
-// There are three ways to use GoStats:
+// There are three ways to use GoStats as your program accumulates values:
 // 1. Incremental or streaming -- include the new values one at a time
 // 2. Incremental, in chunks -- include the new values in chunks by passing an array of values
 //
-// Obtain the descriptive stats at any time by calling Mean(), Variance(), etc.
+//    Obtain the descriptive stats at any time by calling Mean(), Variance(), etc.
 //
-// 3. Batch -- just calculate results for the passed in array. These functions are prefixed by 
+// 3. Batch -- just calculate results for the passed-in array. These functions are prefixed by 
 //    "Calc". 
 //
 // See stats_test.go for examples of each.
 //
 // Descriptions of the skew and kurtosis calculations can be found here:
 // http://www.tc3.edu/instruct/sbrown/stat/shape.htm
+//
+// For build/test help, see README.md.
 //
 
 import (
@@ -37,7 +40,6 @@ import (
 type Stats struct {
 	n, min, max, sum, mean, m2, m3, m4 float64
 }
-
 
 // 
 // 
@@ -68,7 +70,6 @@ func (d *Stats) Sum() float64 {
 func (d *Stats) Mean() float64 {
 	return d.mean
 }
-
 
 //
 // 
@@ -159,13 +160,12 @@ func (d *Stats) SampleKurtosis() float64 {
 	return (d.n - 1.0) / ((d.n - 2.0) * (d.n - 3.0)) * ((d.n+1.0)*populationKurtosis + 6.0)
 }
 
-
 //
 //
-// Array-only functions
+// Batch functions
 //
-// These are non-incremental functions that operate only on the data given them
-// They're prefixed with 'Calc'
+// These are non-incremental functions that operate only on the data given them.
+// They're prefixed with 'Calc'.
 // 
 func StatsCount(data []float64) int {
 	return len(data)

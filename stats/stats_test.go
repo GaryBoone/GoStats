@@ -5,7 +5,13 @@ package stats
 //
 // Author:   Gary Boone
 // 
-// Copyright (c) 2011 Gary Boone <gary.boone@gmail.com>.
+// Test:
+//   go test stats.go stats_test.go
+// 
+// Benchmark:
+//   go test stats.go stats_test.go -bench='.'
+//
+// Copyright (c) 2011-2013 Gary Boone <gary.boone@gmail.com>.
 //
 // To test, all code was compared against the R stats package (http://r-project.org)
 //
@@ -38,14 +44,13 @@ package stats
 //
 
 import (
-	"testing"
 	"math"
-	"rand"
+	"math/rand"
+	"testing"
 	"time"
 )
 
 const TOL = 1e-14
-
 
 //
 //
@@ -251,7 +256,6 @@ func TestArrayStats(t *testing.T) {
 	checkFloat64(StatsSampleKurtosis(a), -1.2, TOL, "SampleKurtosis", t)
 }
 
-
 func TestArrayStats2(t *testing.T) {
 	a := []float64{1.0, -2.0, 13.0, 47.0, 115.0, -0.03, -123.4, 23.0, -23.04, 12.3}
 	checkInt(StatsCount(a), 10, "Count", t)
@@ -273,7 +277,7 @@ func TestArrayStats2(t *testing.T) {
 //
 // Benchmark tests
 //
-// run with: gotest -bench="Benchmark"
+// run with: go test stats.go stats_test.go -bench="Benchmark"
 //
 
 func BenchmarkUpdate(b *testing.B) {
@@ -343,7 +347,7 @@ func BenchmarkCalcSampleKurtosis10(b *testing.B) {
 // resulting stable time is the time for the calculation on 100k values.
 func BenchmarkCalcSampleKurtosis100k(b *testing.B) {
 	b.StopTimer()
-	rand.Seed(time.Nanoseconds())
+	rand.Seed(int64(time.Now().Nanosecond()))
 	n := 100000 // not the same as b.N
 	a := make([]float64, n)
 	for i := 0; i < n; i++ {
@@ -486,10 +490,6 @@ func TestUpdate010(t *testing.T) {
 	checkNaN(d.SampleKurtosis(), "SampleKurtosis", t)
 }
 
-
-
-
-
 //
 //
 // Assertion functions used for tests
@@ -504,7 +504,7 @@ func checkInt(x, y int, test string, t *testing.T) {
 }
 
 func checkFloat64(x, y, tol float64, test string, t *testing.T) {
-	if math.Fabs(x-y) > math.Fabs(x*tol) {
+	if math.Abs(x-y) > math.Abs(x*tol) {
 		t.Errorf("Found %v, but expected %v for test %v", x, y, test)
 	}
 }
@@ -516,7 +516,7 @@ func checkNaN(x float64, test string, t *testing.T) {
 }
 
 func checkFloat64Abs(x, y, tol float64, test string, t *testing.T) {
-	if math.Fabs(x-y) > math.Fabs(tol) {
+	if math.Abs(x-y) > math.Abs(tol) {
 		t.Errorf("Found %v, but expected %v for test %v", x, y, test)
 	}
 }

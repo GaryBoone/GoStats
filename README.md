@@ -13,28 +13,48 @@ Incremental updates are useful for streaming data applications or situations in 
 
 The package includes convenience functions that allow incremental updates by single or multiple values. Or you can use traditional batch calculations on a given array of values. The linear regression functions also include incremental and batch updates. 
 
-See demo.go and the *_test.go files for example usage.
 
 ## Installation
 
-To install
+Set up Go env as shown in [How to Write Go Code](http://golang.org/doc/code.html) and this [screencast](http://www.youtube.com/watch?v=XCsL89YtqCs).
 
-	git clone https://github.com/GaryBoone/GoStats.git
-	cd GoStats
-	make
-	make install
+Install the stats pkg
 
-To make and run the demos, cd into each demo directory, then make and run the executable, or
+	$ cd goProjects/src/GoStats/stats
+	$ go test -v --bench='.'
+	$ go install
 
-	(cd demos/descriptive_statistics/ && make)
-	./demos/descriptive_statistics/descriptive_stats_demo
-	(cd demos/regression/ && make)
-	./demos/regression/regression_demo
+Run the descriptive statistics demo
+
+	$ cd ../descriptive_statistics_demo/
+	$ go build
+	$ ./descriptive_statistics_demo
+
+Run the regression demo
+
+	$ cd ../regression_demo/
+	$ go build
+	$ ./regression_demo
+
+
 	
 
 ## Usage ##
 
+The GoStats package is flexible and can calculate statistics in _batch_ or _incremental_ modes. If you have an array of values and want to see their descriptive statistics, use the batch methods. They are prefixed with _Stats_, such as _StatsSampleVariance( []float64 )_.
+
+Incremental mode means that you pass values into the GoStats package one or a few at a time. The descriptive statistics are available at any time. This mode is useful in situations in which the data may be generated one or a few at a time by some process. It's also memory efficient because the statistics are available without having to store all of the values they're based on, in contrast to the batch methods.
+
 ### Descriptive Statistics ###
+
+#### Batch
+Batch updates are the traditional calculations of descriptive statistics on a given array of values. They don't require a Stats struct and are prefixed with 'Stats'.
+
+	a := []float64{1.0, 2.0, 3.0, 4.0, 5.0}
+	populationVariance := StatsPopulationVariance(a)   // = 2.0
+	sampleVariance := StatsSampleVariance(a)           // = 2.5
+
+#### Incremental
 
 To use incremental updates, declare a Stats struct
 
@@ -71,11 +91,6 @@ Updates can also be done with arrays of values
 
 Note that this is an update to an existing Stats struct. It updates the current values.
 
-Batch updates are the traditional calculations of descriptive statistics on a given array of values. They don't require a Stats struct and are prefixed with 'Stats'.
-
-	a := []float64{1.0, 2.0, 3.0, 4.0, 5.0}
-	populationVariance := StatsPopulationVariance(a)   // = 2.0
-	sampleVariance := StatsSampleVariance(a)           // = 2.5
 
 	
 ### Linear Regression ###
@@ -125,12 +140,15 @@ Note that if you don't need all of the values, you can ignore them
 	
 ## Tests ##
 
-To test, all code was compared against the R stats package (http://r-project.org)
+To test, all code was compared against the [R stats package](http://r-project.org).
 
-	gotest
+	$ go test
 	
 ## Benchmarks ##
 
 The benchmarks show that the incremental and batch functions show similar efficiency.
 
-	gotest -bench="Benchmark"
+	$ go test -bench='.'
+	
+## License ##
+The code is available at github [GaryBoone/GoStats](https://github.com/GaryBoone/GoStats) under the [MIT license](http://opensource.org/licenses/mit-license.php).
